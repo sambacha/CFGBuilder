@@ -1,8 +1,16 @@
 cmake_minimum_required(VERSION 3.2)
 
 project(CFGConstruction)
+# cmake .. -DCMAKE_OSX_ARCHITECTURES='arm64'
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall")
+if(APPLE)
+    set(BOOST_CXXFLAGS "cxxflags=-fPIC -std=c++11")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -g -Wall -Wextra -pedantic- fuse-ld=lld --ld-path=$HOME/ld64.lld")
+else()
+    set(BOOST_CXXFLAGS "cxxflags=-fPIC")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall")
+endif()
+
 set(CMAKE_BUILD_TYPE Debug)
 
 find_package(Boost CONFIG REQUIRED program_options filesystem regex)
